@@ -1,0 +1,12 @@
+{
+  "files.exclude": {
+    "**/Library": true,
+    "**/Temp": true,
+    "**/Logs": true,
+    "**/UserSettings": true
+  },
+  "files.watcherExclude": {
+    "**/Library/**": true,
+    "**/Temp/**": true
+  }
+}

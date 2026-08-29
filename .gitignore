@@ -1,0 +1,18 @@
+.godot/
+.import/
+*.tmp
+*.log
+exports/
+forum-runtime/data/runtime.json
+
+# Unity generated files — source assets and Packages are retained.
+/client-unity/[Ll]ibrary/
+/client-unity/[Tt]emp/
+/client-unity/[Oo]bj/
+/client-unity/[Bb]uild/
+/client-unity/[Bb]uilds/
+/client-unity/[Ll]ogs/
+/client-unity/[Uu]serSettings/
+/client-unity/.vs/
+/client-unity/*.csproj
+/client-unity/*.sln

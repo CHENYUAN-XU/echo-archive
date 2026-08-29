@@ -1,0 +1,14 @@
+{
+  "name": "EchoForum.Infrastructure",
+  "rootNamespace": "EchoForum.Infrastructure",
+  "references": ["EchoForum.Domain", "EchoForum.Application"],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
