@@ -4,6 +4,9 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Game/Scenes/ForumPrototype.unity
+    guid: aafecadfa604537498d4d115745a15c1
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

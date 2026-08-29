@@ -1,0 +1,64 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <Style src="ForumPrototype.uss" />
+    <ui:VisualElement class="forum-shell">
+        <ui:VisualElement class="grain-overlay" picking-mode="Ignore" />
+        <ui:VisualElement class="topbar">
+            <ui:Button name="home-button" text="ECHO ARCHIVE" class="wordmark" />
+            <ui:Label text="留声论坛 / 本地离线快照" class="subtitle" />
+            <ui:VisualElement class="topbar-spacer" />
+            <ui:Label text="同步状态：离线" class="offline-status" />
+            <ui:Button text="登录（暂不可用）" enabled="false" class="placeholder-button" />
+            <ui:Button text="发帖（暂不可用）" enabled="false" class="placeholder-button" />
+        </ui:VisualElement>
+        <ui:VisualElement class="body-frame">
+            <ui:VisualElement class="left-rail">
+                <ui:Label text="板块导航" class="section-label" />
+                <ui:VisualElement name="board-navigation" class="board-navigation" />
+                <ui:VisualElement class="rail-rule" />
+                <ui:Label text="档案提示" class="section-label" />
+                <ui:Label text="当前内容来自随游戏附带的演示快照。网络、账号和发布功能尚未接入。" class="rail-note" />
+            </ui:VisualElement>
+            <ui:VisualElement class="main-column">
+                <ui:VisualElement name="home-view" class="home-view">
+                    <ui:VisualElement class="home-heading">
+                        <ui:VisualElement>
+                            <ui:Label text="今夜的新记录" class="page-title" />
+                            <ui:Label text="按最近活动排序 · 4 条公开主题" class="page-description" />
+                        </ui:VisualElement>
+                        <ui:Label text="UTC+0" class="time-zone" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="thread-list" class="thread-list" />
+                </ui:VisualElement>
+                <ui:VisualElement name="detail-view" class="detail-view">
+                    <ui:Button name="back-button" text="← 返回主题列表" class="back-button" />
+                    <ui:VisualElement name="detail-content" class="detail-content" />
+                    <ui:VisualElement class="reply-locked">
+                        <ui:Label text="回复功能将在账号与本地存档接入后开放。" class="reply-locked-text" />
+                        <ui:Button text="写回复（暂不可用）" enabled="false" class="placeholder-button" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement class="right-rail">
+                <ui:VisualElement class="sidebar-card announcement-card">
+                    <ui:Label text="系统公告" class="sidebar-title" />
+                    <ui:Label text="请保留原始记录。此原型不包含真实帐号或服务器连接。" class="sidebar-copy" />
+                    <ui:Label text="ARCHIVE BUILD 0.1" class="build-stamp" />
+                </ui:VisualElement>
+                <ui:VisualElement class="sidebar-card">
+                    <ui:Label text="在线记录员" class="sidebar-title" />
+                    <ui:VisualElement name="online-users" class="online-users" />
+                </ui:VisualElement>
+                <ui:VisualElement class="sidebar-card">
+                    <ui:Label text="正在被讨论" class="sidebar-title" />
+                    <ui:VisualElement name="hot-threads" class="hot-threads" />
+                </ui:VisualElement>
+                <ui:VisualElement class="sidebar-card event-card">
+                    <ui:Label text="事件入口" class="sidebar-title" />
+                    <ui:Label text="调查场景将在后续垂直切片中接入。" class="sidebar-copy" />
+                    <ui:Button text="进入事件（暂不可用）" enabled="false" class="placeholder-button event-button" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement class="footer"><ui:Label text="ECHO ARCHIVE · 所有数据均为本地模拟内容" class="footer-label" /></ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
