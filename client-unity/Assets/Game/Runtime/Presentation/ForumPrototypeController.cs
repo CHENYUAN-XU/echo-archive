@@ -10,6 +10,8 @@ namespace EchoForum.Presentation
     public sealed class ForumPrototypeController : MonoBehaviour
     {
         private ForumQueries queries;
+        private CaseUseCases cases;
+        private string initialThreadId;
         private ForumHomeSnapshot home;
         private VisualElement root;
         private VisualElement boardNavigation;
@@ -20,9 +22,11 @@ namespace EchoForum.Presentation
         private VisualElement detailView;
         private VisualElement detailContent;
 
-        public void Initialize(ForumQueries forumQueries)
+        public void Initialize(ForumQueries forumQueries, CaseUseCases caseUseCases, string returnThreadId)
         {
             queries = forumQueries;
+            cases = caseUseCases;
+            initialThreadId = returnThreadId;
         }
 
         private void Start()
@@ -46,7 +50,7 @@ namespace EchoForum.Presentation
             root.Q<Button>("back-button").clicked += ShowHome;
             home = queries.LoadHome();
             BuildHome();
-            ShowHome();
+            if (string.IsNullOrEmpty(initialThreadId)) ShowHome(); else ShowThread(initialThreadId);
         }
 
         private void BuildHome()
@@ -148,6 +152,21 @@ namespace EchoForum.Presentation
                 detailContent.Add(CreatePostBlock(reply.Author, reply.Body, reply.PublishedAtUtc, $"#{reply.Floor}"));
             }
 
+            if (thread.Id == "thread-guidelines" && cases != null)
+            {
+                var snapshot = cases.GetSnapshot("case-observation-01");
+                var action = new VisualElement(); action.AddToClassList("case-action");
+                var closed = snapshot.Status == CaseStatus.Closed;
+                action.Add(CreateLabel(closed ? "事件状态：已结案" : "事件状态：可调查", "case-status"));
+                if (closed)
+                {
+                    detailContent.Add(CreatePostBlock(thread.OriginalPost.Author, "系统结案标记：测试规则 01 已完成。", DateTimeOffset.Parse(snapshot.CompletedAtUtc), "系统"));
+                }
+                var enter = new Button(BeginInvestigation) { text = closed ? "事件已结案" : "进入调查" };
+                enter.SetEnabled(!closed); enter.AddToClassList("case-enter-button"); action.Add(enter);
+                detailContent.Add(action);
+            }
+
             homeView.style.display = DisplayStyle.None;
             detailView.style.display = DisplayStyle.Flex;
         }
@@ -168,6 +187,13 @@ namespace EchoForum.Presentation
             block.Add(meta);
             block.Add(CreateLabel(body, "post-body"));
             return block;
+        }
+
+        private void BeginInvestigation()
+        {
+            ForumNavigationState.ReturnThreadId = "thread-guidelines";
+            if (cases.GetSnapshot("case-observation-01").Status == CaseStatus.NotStarted) cases.Start("case-observation-01");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("InvestigationPrototype");
         }
 
         private void ShowHome()

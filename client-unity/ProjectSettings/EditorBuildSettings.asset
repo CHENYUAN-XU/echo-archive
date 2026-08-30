@@ -8,5 +8,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Game/Scenes/ForumPrototype.unity
     guid: aafecadfa604537498d4d115745a15c1
+  - enabled: 1
+    path: Assets/Game/Scenes/InvestigationPrototype.unity
+    guid: 95428c6f32f8ffb418db85c99ee122bc
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

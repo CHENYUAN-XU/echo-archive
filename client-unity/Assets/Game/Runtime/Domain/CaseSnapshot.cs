@@ -7,8 +7,18 @@ namespace EchoForum.Domain
     /// </summary>
     public sealed class CaseSnapshot
     {
-        public string CaseId { get; set; }
-        public long LastSequence { get; set; }
+        public string CaseId;
+        public long LastSequence;
         public Dictionary<string, string> Values { get; } = new Dictionary<string, string>();
+        public CaseStatus Status;
+        public List<string> DiscoveredClues = new List<string>();
+        public List<string> HeldItems = new List<string>();
+        public string CompletedAtUtc;
+
+        public CaseSnapshot Clone()
+        {
+            return new CaseSnapshot { CaseId = CaseId, Status = Status, LastSequence = LastSequence, DiscoveredClues = new List<string>(DiscoveredClues), HeldItems = new List<string>(HeldItems), CompletedAtUtc = CompletedAtUtc };
+        }
+
     }
 }

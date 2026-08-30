@@ -13,4 +13,9 @@ namespace EchoForum.Domain
 
         public string CaseId { get; }
     }
+    public sealed class StartCaseCommand : CaseCommand { public StartCaseCommand(string caseId) : base(caseId) { } }
+    public sealed class InvestigateCaseCommand : CaseCommand { public InvestigateCaseCommand(string caseId, string clueId) : base(caseId) { ClueId = clueId; } public string ClueId { get; } }
+    public sealed class AcquireCaseItemCommand : CaseCommand { public AcquireCaseItemCommand(string caseId, string itemId) : base(caseId) { ItemId = itemId; } public string ItemId { get; } }
+    public sealed class ResolveCaseObjectCommand : CaseCommand { public ResolveCaseObjectCommand(string caseId, string objectId) : base(caseId) { ObjectId = objectId; } public string ObjectId { get; } }
+    public sealed class SettleCaseCommand : CaseCommand { public SettleCaseCommand(string caseId) : base(caseId) { } }
 }
