@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2ea99a9807a5e04099f9456b4fc04cf, type: 3}
+  m_Name: ThreadGuidelines
+  m_EditorClassIdentifier: EchoForum.Content::EchoForum.Content.ForumThreadDefinition
+  ThreadId: thread-guidelines
+  BoardId: board-notice
+  Title: "\u65B0\u8BBF\u5BA2\u987B\u77E5\uFF1A\u8BB0\u5F55\u3001\u5F15\u7528\u4E0E\u5F52\u6863\u89C4\u8303"
+  AuthorId: user-caretaker
+  PublishedAtUtc: 2026-08-29T08:12:00Z
+  Body: "\u6B22\u8FCE\u8FDB\u5165\u7559\u58F0\u8BBA\u575B\u3002\u672C\u5730\u6F14\u793A\u4EC5\u63D0\u4F9B\u9884\u7F6E\u5185\u5BB9\uFF1B\u767B\u5F55\u3001\u53D1\u5E16\u4E0E\u4E8B\u4EF6\u5165\u53E3\u4F1A\u5728\u540E\u7EED\u7248\u672C\u5F00\u653E\u3002\u8BF7\u5148\u9605\u8BFB\u677F\u5757\u8BF4\u660E\uFF0C\u518D\u5F00\u59CB\u6574\u7406\u81EA\u5DF1\u7684\u8BB0\u5F55\u3002"
+  Summary: "\u79BB\u7EBF\u5FEB\u7167\u4E2D\u7684\u6D4B\u8BD5\u4E8B\u4EF6 A \u53EF\u7531\u7ED1\u5B9A\u914D\u7F6E\u63D0\u4F9B\u5165\u53E3\u3002"
+  Tags:
+  - "\u7F6E\u9876"
+  - "\u7AD9\u52A1"
+  - "\u79BB\u7EBF\u5FEB\u7167"
+  IsPinned: 1
+  IsOfficial: 1
+  InitialReplies:
+  - ReplyId: reply-guidelines-1
+    AuthorId: user-lantern
+    Body: "\u6536\u5230\u3002\u79BB\u7EBF\u72B6\u6001\u4E5F\u80FD\u628A\u65E7\u5E16\u8BFB\u5B8C\uFF0C\u8FD9\u70B9\u5F88\u5B9E\u7528\u3002"
+    PublishedAtUtc: 2026-08-29T08:31:00Z
+    Floor: 2
+  - ReplyId: reply-guidelines-2
+    AuthorId: user-caretaker
+    Body: "\u5DF2\u66F4\u65B0\u7D22\u5F15\u8BF4\u660E\u3002"
+    PublishedAtUtc: 2026-08-29T09:04:00Z
+    Floor: 3
+  CaseId: case-observation-01

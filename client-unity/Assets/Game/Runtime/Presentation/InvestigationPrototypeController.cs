@@ -7,7 +7,8 @@ namespace EchoForum.Presentation
 {
     public sealed class InvestigationPrototypeController : MonoBehaviour
     {
-        private const string CaseId = "case-observation-01";
+        [SerializeField] private string fallbackCaseId = "case-observation-01";
+        private string CaseId => string.IsNullOrEmpty(ForumNavigationState.ActiveCaseId) ? fallbackCaseId : ForumNavigationState.ActiveCaseId;
         private CaseUseCases cases;
         private CaseSnapshot snapshot;
         private string message = "测试规则 01：接近并调查观测点 A。";
@@ -62,7 +63,6 @@ namespace EchoForum.Presentation
 
         private void ReturnToForum()
         {
-            ForumNavigationState.ReturnThreadId = "thread-guidelines";
             UnityEngine.SceneManagement.SceneManager.LoadScene("ForumPrototype");
         }
 

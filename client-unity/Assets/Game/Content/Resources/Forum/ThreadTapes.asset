@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2ea99a9807a5e04099f9456b4fc04cf, type: 3}
+  m_Name: ThreadTapes
+  m_EditorClassIdentifier: EchoForum.Content::EchoForum.Content.ForumThreadDefinition
+  ThreadId: thread-tapes
+  BoardId: board-archive
+  Title: "\u4E00\u6279\u65E7\u78C1\u5E26\u7684\u7F16\u53F7\u8BB0\u5F55\u65B9\u5F0F"
+  AuthorId: user-lantern
+  PublishedAtUtc: 2026-08-29T21:16:00Z
+  Body: "\u6574\u7406\u65E7\u4ECB\u8D28\u65F6\uFF0C\u5148\u6309\u6765\u6E90\u3001\u65E5\u671F\u548C\u8F7D\u4F53\u7F16\u53F7\u3002\u7F3A\u5931\u4FE1\u606F\u7528\u7A7A\u4F4D\u6807\u8BB0\uFF0C\u4E0D\u8981\u4E3A\u4E86\u770B\u8D77\u6765\u5B8C\u6574\u800C\u8865\u5199\u3002"
+  Summary: "\u5173\u4E8E\u4ECB\u8D28\u7F16\u53F7\u7684\u4E2D\u6027\u6D4B\u8BD5\u8BA8\u8BBA\u3002"
+  Tags:
+  - "\u4ECB\u8D28"
+  - "\u6574\u7406"
+  - "\u65B9\u6CD5"
+  IsPinned: 0
+  IsOfficial: 0
+  InitialReplies:
+  - ReplyId: reply-tapes-1
+    AuthorId: user-reed
+    Body: "\u6211\u4F1A\u989D\u5916\u8BB0\u4E0B\u64AD\u653E\u8BBE\u5907\uFF0C\u4E4B\u540E\u590D\u67E5\u65F6\u6BD4\u8F83\u65B9\u4FBF\u3002"
+    PublishedAtUtc: 2026-08-29T21:42:00Z
+    Floor: 2
+  - ReplyId: reply-tapes-2
+    AuthorId: user-north
+    Body: "\u540C\u610F\uFF0C\u73AF\u5883\u566A\u58F0\u4E5F\u503C\u5F97\u5199\u4E00\u7B14\u3002"
+    PublishedAtUtc: 2026-08-29T22:10:00Z
+    Floor: 3
+  - ReplyId: reply-tapes-3
+    AuthorId: user-lantern
+    Body: "\u5DF2\u628A\u6A21\u677F\u653E\u5728\u9996\u697C\u672B\u5C3E\uFF0C\u6B22\u8FCE\u8865\u5145\u3002"
+    PublishedAtUtc: 2026-08-29T22:28:00Z
+    Floor: 4
+  CaseId: 

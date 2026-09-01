@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44225a88ea891ba419a37f768b197963, type: 3}
+  m_Name: BindingObservationA
+  m_EditorClassIdentifier: EchoForum.Content::EchoForum.Content.ThreadCaseBindingAsset
+  ThreadId: thread-guidelines
+  CaseId: case-observation-01
+  AllowsEntry: 1
+  NotStartedEntryLabel: "\u524D\u5F80\u73B0\u573A"
+  InProgressEntryLabel: "\u7EE7\u7EED\u8C03\u67E5"
+  ClosedEntryLabel: "\u5DF2\u7ED3\u6848"
+  UnavailableEntryLabel: "\u8C03\u67E5\u533A\u57DF\u5C1A\u672A\u5F00\u653E"
+  UnlockConditionId: prototype-ready

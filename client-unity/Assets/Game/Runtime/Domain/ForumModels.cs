@@ -82,7 +82,8 @@ namespace EchoForum.Domain
             IReadOnlyList<ForumReply> replies,
             IReadOnlyList<string> tags,
             bool isPinned,
-            bool isOfficial)
+            bool isOfficial,
+            string summary = null)
         {
             Id = id;
             Board = board;
@@ -92,6 +93,7 @@ namespace EchoForum.Domain
             Tags = tags;
             IsPinned = isPinned;
             IsOfficial = isOfficial;
+            Summary = summary;
         }
 
         public string Id { get; }
@@ -102,6 +104,7 @@ namespace EchoForum.Domain
         public IReadOnlyList<string> Tags { get; }
         public bool IsPinned { get; }
         public bool IsOfficial { get; }
+        public string Summary { get; }
         public int ReplyCount => Replies.Count;
         public DateTimeOffset LastActivityUtc => ReplyCount > 0 ? Replies[ReplyCount - 1].PublishedAtUtc : OriginalPost.PublishedAtUtc;
     }

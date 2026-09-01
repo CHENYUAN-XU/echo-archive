@@ -23,7 +23,7 @@
                     <ui:VisualElement class="home-heading">
                         <ui:VisualElement>
                             <ui:Label text="今夜的新记录" class="page-title" />
-                            <ui:Label text="按最近活动排序 · 4 条公开主题" class="page-description" />
+                            <ui:Label text="按最近活动排序 · 本地内容快照" class="page-description" />
                         </ui:VisualElement>
                         <ui:Label text="UTC+0" class="time-zone" />
                     </ui:VisualElement>
@@ -54,7 +54,7 @@
                 </ui:VisualElement>
                 <ui:VisualElement class="sidebar-card event-card">
                     <ui:Label text="事件入口" class="sidebar-title" />
-                    <ui:Label text="调查场景将在后续垂直切片中接入。" class="sidebar-copy" />
+                    <ui:Label text="事件入口由帖子绑定配置决定。" class="sidebar-copy" />
                     <ui:Button text="进入事件（暂不可用）" enabled="false" class="placeholder-button event-button" />
                 </ui:VisualElement>
             </ui:VisualElement>

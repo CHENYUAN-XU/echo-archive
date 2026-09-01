@@ -9,14 +9,18 @@ namespace EchoForum.Bootstrap
         public static GameSessionHost Instance { get; private set; }
         public ForumQueries Forum { get; private set; }
         public CaseUseCases Cases { get; private set; }
-        public string ReturnThreadId { get; set; }
+        public ForumCaseUseCases ForumCases { get; private set; }
         public static GameSessionHost Require() => Instance ?? new GameObject("GameSessionHost").AddComponent<GameSessionHost>();
+
         private void Awake()
         {
             if (Instance != null && Instance != this) { Destroy(gameObject); return; }
-            Instance = this; DontDestroyOnLoad(gameObject);
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
             Cases = new CaseUseCases(new LocalCaseSessionRepository(new JsonCaseSaveStore()));
-            Forum = new LocalForumQueriesFactory().Create();
+            var content = new ContentDrivenForumCatalog();
+            Forum = new ForumQueries(content);
+            ForumCases = new ForumCaseUseCases(content, Cases);
         }
     }
 }

@@ -1,7 +1,7 @@
 {
-  "name": "EchoForum.Infrastructure",
-  "rootNamespace": "EchoForum.Infrastructure",
-  "references": ["EchoForum.Domain", "EchoForum.Application", "EchoForum.Content"],
+  "name": "EchoForum.Content",
+  "rootNamespace": "EchoForum.Content",
+  "references": [],
   "includePlatforms": [],
   "excludePlatforms": [],
   "allowUnsafeCode": false,

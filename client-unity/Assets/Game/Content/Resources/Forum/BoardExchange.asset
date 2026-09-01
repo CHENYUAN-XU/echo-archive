@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe8ceab78c0637b4e8fed6e2907d387f, type: 3}
+  m_Name: BoardExchange
+  m_EditorClassIdentifier: EchoForum.Content::EchoForum.Content.ForumBoardDefinition
+  BoardId: board-exchange
+  Slug: exchange
+  DisplayName: "\u591C\u95F4\u4EA4\u6D41"
+  Description: "\u5173\u4E8E\u8BBE\u5907\u3001\u5730\u70B9\u4E0E\u8BB0\u5F55\u65B9\u6CD5\u7684\u65E5\u5E38\u8BA8\u8BBA\u3002"

@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2ea99a9807a5e04099f9456b4fc04cf, type: 3}
+  m_Name: ThreadIndex
+  m_EditorClassIdentifier: EchoForum.Content::EchoForum.Content.ForumThreadDefinition
+  ThreadId: thread-index
+  BoardId: board-archive
+  Title: "[\u7D22\u5F15] \u672C\u5468\u65B0\u589E\u7684\u516C\u5F00\u6761\u76EE"
+  AuthorId: user-caretaker
+  PublishedAtUtc: 2026-08-29T18:40:00Z
+  Body: "\u672C\u5468\u7D22\u5F15\u5DF2\u540C\u6B65\u5230\u672C\u5730\u5FEB\u7167\u3002\u8FD9\u91CC\u5217\u51FA\u7684\u662F\u5206\u7C7B\u5165\u53E3\uFF0C\u4E0D\u4EE3\u8868\u4EFB\u4F55\u7ED3\u8BBA\u6216\u5904\u7406\u72B6\u6001\u3002"
+  Summary: "\u5B98\u65B9\u7D22\u5F15\u6D4B\u8BD5\u5E16\u3002"
+  Tags:
+  - "\u7D22\u5F15"
+  - "\u5B98\u65B9"
+  IsPinned: 0
+  IsOfficial: 1
+  InitialReplies:
+  - ReplyId: reply-index-1
+    AuthorId: user-player
+    Body: "\u7D22\u5F15\u9875\u52A0\u8F7D\u6B63\u5E38\u3002"
+    PublishedAtUtc: 2026-08-29T19:07:00Z
+    Floor: 2
+  CaseId: 

@@ -87,3 +87,8 @@
 .reply-locked-text { color: #778078; font-size: 12px; }
 .footer { height: 26px; border-top-width: 1px; border-top-color: #273531; justify-content: center; padding-top: 8px; }
 .footer-label { color: #53625d; font-size: 10px; letter-spacing: 0.8px; }
+
+.case-action { flex-direction: row; align-items: center; justify-content: space-between; background-color: #15211e; border-width: 1px; border-color: #566045; padding: 12px 14px; margin-top: 12px; }
+.case-status { color: #d3d49a; font-size: 12px; }
+.case-enter-button { background-color: #566045; border-width: 1px; border-color: #8b956c; border-radius: 0; color: #f0efd3; font-size: 12px; }
+.case-enter-button:disabled { opacity: 1; background-color: #202b29; border-color: #39443f; color: #7b857d; }

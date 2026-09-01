@@ -12,20 +12,62 @@ namespace EchoForum.Infrastructure
         void Save(CaseSnapshot snapshot);
     }
 
-    public sealed class JsonCaseSaveStore : ILocalCaseSaveStore
+    public interface IPrototypeProgressReset
+    {
+        void ResetPrototypeProgress();
+    }
+
+    [System.Serializable]
+    public sealed class LocalCaseSaveFile
+    {
+        public int SaveVersion = 1;
+        public List<CaseSnapshot> Cases = new List<CaseSnapshot>();
+    }
+
+    /// <summary>Local progress only. Published case and forum content remains in ScriptableObject assets.</summary>
+    public sealed class JsonCaseSaveStore : ILocalCaseSaveStore, IPrototypeProgressReset
     {
         private const string SaveName = "echo-archive-case.json";
+        private readonly string path;
+
+        public JsonCaseSaveStore() : this(UnityEngine.Application.persistentDataPath) { }
+        public JsonCaseSaveStore(string directory) { path = Path.Combine(directory, SaveName); }
+
         public CaseSnapshot Load(string caseId)
         {
-            var path = Path.Combine(UnityEngine.Application.persistentDataPath, SaveName);
-            if (!File.Exists(path)) return null;
-            var data = JsonUtility.FromJson<CaseSnapshot>(File.ReadAllText(path));
-            return data != null && data.CaseId == caseId ? data : null;
+            foreach (var snapshot in LoadAll())
+            {
+                if (snapshot != null && snapshot.CaseId == caseId) return snapshot.Clone();
+            }
+            return null;
         }
+
         public void Save(CaseSnapshot snapshot)
         {
-            var path = Path.Combine(UnityEngine.Application.persistentDataPath, SaveName);
-            File.WriteAllText(path, JsonUtility.ToJson(snapshot, true));
+            if (snapshot == null || string.IsNullOrEmpty(snapshot.CaseId)) return;
+            var all = LoadAll();
+            var index = all.FindIndex(item => item != null && item.CaseId == snapshot.CaseId);
+            if (index >= 0) all[index] = snapshot.Clone(); else all.Add(snapshot.Clone());
+            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            File.WriteAllText(path, JsonUtility.ToJson(new LocalCaseSaveFile { Cases = all }, true));
+        }
+
+        public void ResetPrototypeProgress()
+        {
+            if (File.Exists(path)) File.Delete(path);
+        }
+
+        private List<CaseSnapshot> LoadAll()
+        {
+            if (!File.Exists(path)) return new List<CaseSnapshot>();
+            var json = File.ReadAllText(path);
+            var current = JsonUtility.FromJson<LocalCaseSaveFile>(json);
+            if (current != null && current.Cases != null && current.Cases.Count > 0) return current.Cases;
+
+            // Compatibility with the previous single-CaseSnapshot save format.
+            var legacy = JsonUtility.FromJson<CaseSnapshot>(json);
+            if (legacy != null && !string.IsNullOrEmpty(legacy.CaseId)) return new List<CaseSnapshot> { legacy };
+            return current != null && current.Cases != null ? current.Cases : new List<CaseSnapshot>();
         }
     }
 

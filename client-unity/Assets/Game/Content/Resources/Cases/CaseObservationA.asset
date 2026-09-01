@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0613741caa2297945b5443895444f153, type: 3}
+  m_Name: CaseObservationA
+  m_EditorClassIdentifier: EchoForum.Content::EchoForum.Content.CaseDefinitionAsset
+  CaseId: case-observation-01
+  DisplayName: "\u6D4B\u8BD5\u4E8B\u4EF6 A"
+  InvestigationSceneName: InvestigationPrototype
+  IsAvailableInCurrentBuild: 1
+  RuleSummary: "\u89C2\u6D4B\u89C4\u5219\uFF1A\u6309\u65E2\u6709\u539F\u578B\u5B8C\u6210\u4E09\u6BB5\u4E2D\u6027\u6D4B\u8BD5\u4EA4\u4E92\u3002"
+  StartConditionId: prototype-ready
+  CompletionStatusText: "\u4E8B\u4EF6\u72B6\u6001\uFF1A\u5DF2\u7ED3\u6848"
+  CompletionReplyText: "\u7CFB\u7EDF\u7ED3\u6848\u6807\u8BB0\uFF1A\u6D4B\u8BD5\u4E8B\u4EF6
+    A \u5DF2\u5B8C\u6210\u3002"

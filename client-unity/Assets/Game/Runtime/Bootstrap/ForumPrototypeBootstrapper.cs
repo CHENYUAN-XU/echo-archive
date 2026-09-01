@@ -15,7 +15,7 @@ namespace EchoForum.Bootstrap
         {
             var controller = GetComponent<ForumPrototypeController>();
             var host = GameSessionHost.Require();
-            controller.Initialize(host.Forum, host.Cases, ForumNavigationState.ReturnThreadId);
+            controller.Initialize(host.Forum, host.ForumCases, ForumNavigationState.ReturnThreadId);
             ForumNavigationState.ReturnThreadId = null;
         }
     }

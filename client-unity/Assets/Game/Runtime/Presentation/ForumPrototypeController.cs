@@ -10,7 +10,7 @@ namespace EchoForum.Presentation
     public sealed class ForumPrototypeController : MonoBehaviour
     {
         private ForumQueries queries;
-        private CaseUseCases cases;
+        private ForumCaseUseCases forumCases;
         private string initialThreadId;
         private ForumHomeSnapshot home;
         private VisualElement root;
@@ -22,16 +22,16 @@ namespace EchoForum.Presentation
         private VisualElement detailView;
         private VisualElement detailContent;
 
-        public void Initialize(ForumQueries forumQueries, CaseUseCases caseUseCases, string returnThreadId)
+        public void Initialize(ForumQueries forumQueries, ForumCaseUseCases forumCaseUseCases, string returnThreadId)
         {
             queries = forumQueries;
-            cases = caseUseCases;
+            forumCases = forumCaseUseCases;
             initialThreadId = returnThreadId;
         }
 
         private void Start()
         {
-            if (queries == null)
+            if (queries == null || forumCases == null)
             {
                 Debug.LogError("ForumPrototypeController requires ForumPrototypeBootstrapper.");
                 return;
@@ -65,10 +65,7 @@ namespace EchoForum.Presentation
             }
 
             threadList.Clear();
-            foreach (var thread in home.Threads)
-            {
-                threadList.Add(CreateThreadCard(thread));
-            }
+            foreach (var thread in home.Threads) threadList.Add(CreateThreadCard(thread));
 
             onlineUsers.Clear();
             foreach (var user in home.OnlineUsers)
@@ -97,25 +94,16 @@ namespace EchoForum.Presentation
         {
             var card = new Button(() => ShowThread(thread.Id));
             card.AddToClassList("thread-card");
-            if (thread.IsPinned)
-            {
-                card.AddToClassList("thread-card-pinned");
-            }
+            if (thread.IsPinned) card.AddToClassList("thread-card-pinned");
 
             var header = new VisualElement();
             header.AddToClassList("thread-card-header");
-            if (thread.IsOfficial)
-            {
-                header.Add(CreateLabel("官方", "official-badge"));
-            }
-            if (thread.IsPinned)
-            {
-                header.Add(CreateLabel("置顶", "pinned-badge"));
-            }
+            if (thread.IsOfficial) header.Add(CreateLabel("官方", "official-badge"));
+            if (thread.IsPinned) header.Add(CreateLabel("置顶", "pinned-badge"));
             header.Add(CreateLabel(thread.Board.Name, "board-badge"));
             card.Add(header);
             card.Add(CreateLabel(thread.Title, "thread-title"));
-            card.Add(CreateLabel(Excerpt(thread.OriginalPost.Body, 62), "thread-excerpt"));
+            card.Add(CreateLabel(Excerpt(string.IsNullOrEmpty(thread.Summary) ? thread.OriginalPost.Body : thread.Summary, 62), "thread-excerpt"));
 
             var footer = new VisualElement();
             footer.AddToClassList("thread-card-footer");
@@ -126,10 +114,7 @@ namespace EchoForum.Presentation
 
             var tagRow = new VisualElement();
             tagRow.AddToClassList("tag-row");
-            foreach (var tag in thread.Tags)
-            {
-                tagRow.Add(CreateLabel(tag, "tag"));
-            }
+            foreach (var tag in thread.Tags) tagRow.Add(CreateLabel(tag, "tag"));
             card.Add(tagRow);
             return card;
         }
@@ -137,38 +122,44 @@ namespace EchoForum.Presentation
         private void ShowThread(string threadId)
         {
             var thread = queries.FindThread(threadId);
-            if (thread == null)
-            {
-                return;
-            }
+            if (thread == null) return;
 
             detailContent.Clear();
             detailContent.Add(CreateLabel(thread.Board.Name + " / 主题阅读", "detail-kicker"));
             detailContent.Add(CreateLabel(thread.Title, "detail-title"));
             detailContent.Add(CreatePostBlock(thread.OriginalPost.Author, thread.OriginalPost.Body, thread.OriginalPost.PublishedAtUtc, "主楼"));
             detailContent.Add(CreateLabel($"回复 · {thread.ReplyCount}", "reply-heading"));
-            foreach (var reply in thread.Replies)
-            {
-                detailContent.Add(CreatePostBlock(reply.Author, reply.Body, reply.PublishedAtUtc, $"#{reply.Floor}"));
-            }
+            foreach (var reply in thread.Replies) detailContent.Add(CreatePostBlock(reply.Author, reply.Body, reply.PublishedAtUtc, $"#{reply.Floor}"));
 
-            if (thread.Id == "thread-guidelines" && cases != null)
+            var entry = forumCases.GetEntry(thread.Id);
+            if (entry.HasBinding)
             {
-                var snapshot = cases.GetSnapshot("case-observation-01");
-                var action = new VisualElement(); action.AddToClassList("case-action");
-                var closed = snapshot.Status == CaseStatus.Closed;
-                action.Add(CreateLabel(closed ? "事件状态：已结案" : "事件状态：可调查", "case-status"));
-                if (closed)
+                if (entry.State == ForumCaseEntryState.Closed && !string.IsNullOrEmpty(entry.CompletionReplyText))
                 {
-                    detailContent.Add(CreatePostBlock(thread.OriginalPost.Author, "系统结案标记：测试规则 01 已完成。", DateTimeOffset.Parse(snapshot.CompletedAtUtc), "系统"));
+                    var completedAt = DateTimeOffset.TryParse(entry.CompletedAtUtc, out var parsed) ? parsed : DateTimeOffset.UtcNow;
+                    detailContent.Add(CreatePostBlock(thread.OriginalPost.Author, entry.CompletionReplyText, completedAt, "系统"));
                 }
-                var enter = new Button(BeginInvestigation) { text = closed ? "事件已结案" : "进入调查" };
-                enter.SetEnabled(!closed); enter.AddToClassList("case-enter-button"); action.Add(enter);
+                var action = new VisualElement();
+                action.AddToClassList("case-action");
+                action.Add(CreateLabel(entry.StatusText, "case-status"));
+                var enter = new Button(() => BeginInvestigation(thread.Id)) { text = entry.Label };
+                enter.SetEnabled(entry.CanEnter);
+                enter.AddToClassList("case-enter-button");
+                action.Add(enter);
                 detailContent.Add(action);
             }
 
             homeView.style.display = DisplayStyle.None;
             detailView.style.display = DisplayStyle.Flex;
+        }
+
+        private void BeginInvestigation(string threadId)
+        {
+            var entry = forumCases.RequestEntry(threadId);
+            if (!entry.CanEnter || string.IsNullOrEmpty(entry.SceneName)) return;
+            ForumNavigationState.ReturnThreadId = entry.ThreadId;
+            ForumNavigationState.ActiveCaseId = entry.CaseId;
+            UnityEngine.SceneManagement.SceneManager.LoadScene(entry.SceneName);
         }
 
         private VisualElement CreatePostBlock(ForumUser author, string body, DateTimeOffset publishedAt, string floor)
@@ -178,22 +169,12 @@ namespace EchoForum.Presentation
             var meta = new VisualElement();
             meta.AddToClassList("post-meta");
             meta.Add(CreateLabel(author.DisplayName, "post-author"));
-            if (author.IsOfficial)
-            {
-                meta.Add(CreateLabel("官方帐号", "official-badge"));
-            }
+            if (author.IsOfficial) meta.Add(CreateLabel("官方帐号", "official-badge"));
             meta.Add(CreateLabel(FormatTime(publishedAt), "post-time"));
             meta.Add(CreateLabel(floor, "post-floor"));
             block.Add(meta);
             block.Add(CreateLabel(body, "post-body"));
             return block;
-        }
-
-        private void BeginInvestigation()
-        {
-            ForumNavigationState.ReturnThreadId = "thread-guidelines";
-            if (cases.GetSnapshot("case-observation-01").Status == CaseStatus.NotStarted) cases.Start("case-observation-01");
-            UnityEngine.SceneManagement.SceneManager.LoadScene("InvestigationPrototype");
         }
 
         private void ShowHome()
@@ -209,14 +190,7 @@ namespace EchoForum.Presentation
             return label;
         }
 
-        private static string Excerpt(string body, int maximumLength)
-        {
-            return body.Length <= maximumLength ? body : body.Substring(0, maximumLength) + "…";
-        }
-
-        private static string FormatTime(DateTimeOffset timestamp)
-        {
-            return timestamp.ToLocalTime().ToString("MM-dd HH:mm");
-        }
+        private static string Excerpt(string body, int maximumLength) => body.Length <= maximumLength ? body : body.Substring(0, maximumLength) + "…";
+        private static string FormatTime(DateTimeOffset timestamp) => timestamp.ToLocalTime().ToString("MM-dd HH:mm");
     }
 }
