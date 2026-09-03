@@ -7,6 +7,8 @@
             <ui:Label text="留声论坛 / 本地离线快照" class="subtitle" />
             <ui:VisualElement class="topbar-spacer" />
             <ui:Label text="同步状态：离线" class="offline-status" />
+            <ui:Label name="player-status" class="player-status" />
+            <ui:Button name="main-menu-button" text="主菜单" class="main-menu-button" />
             <ui:Button text="登录（暂不可用）" enabled="false" class="placeholder-button" />
             <ui:Button text="发帖（暂不可用）" enabled="false" class="placeholder-button" />
         </ui:VisualElement>

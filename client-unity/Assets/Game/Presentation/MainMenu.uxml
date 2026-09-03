@@ -1,0 +1,27 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="MainMenu.uss" />
+    <ui:VisualElement class="menu-shell">
+        <ui:VisualElement class="menu-grain" picking-mode="Ignore" />
+        <ui:VisualElement class="menu-frame">
+            <ui:Label text="ECHO ARCHIVE" class="menu-wordmark" />
+            <ui:Label text="留声论坛 · 本地单机档案" class="menu-subtitle" />
+            <ui:VisualElement class="menu-rule" />
+            <ui:Label name="profile-label" class="profile-label" />
+            <ui:Label name="menu-notice" class="menu-notice" />
+            <ui:VisualElement class="menu-actions">
+                <ui:Button name="new-profile-button" text="新建档案" class="menu-button primary-menu-button" />
+                <ui:Button name="continue-button" text="继续游戏" class="menu-button" />
+                <ui:Button name="quit-button" text="退出游戏" class="menu-button quiet-menu-button" />
+            </ui:VisualElement>
+            <ui:VisualElement name="profile-create" class="profile-create">
+                <ui:Label text="创建本地档案" class="create-title" />
+                <ui:TextField name="profile-display-name" label="显示名" class="profile-input" />
+                <ui:VisualElement class="create-actions">
+                    <ui:Button name="confirm-profile-button" text="确认并进入论坛" class="menu-button primary-menu-button" />
+                    <ui:Button name="cancel-profile-button" text="取消" class="menu-button quiet-menu-button" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:Label text="OFFLINE ARCHIVE BUILD · 内容均为测试占位" class="menu-footer" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

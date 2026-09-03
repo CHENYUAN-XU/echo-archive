@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 1893456083}
   - component: {fileID: 1893456082}
   m_Layer: 0
-  m_Name: ForumPrototype
+  m_Name: MainMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -147,9 +147,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1893456081}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f4dfaba39038ee49bb8a32755893158, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EchoForum.Bootstrap.ForumPrototypeBootstrapper
+  m_Script: {fileID: 11500000, guid: cb97b9c3afe512d4eb6e80d290cea97b, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::EchoForum.Bootstrap.MainMenuBootstrapper
 --- !u!114 &1893456083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,9 +159,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1893456081}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96d93ee5e5abcb24f8fe466ef390bc15, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: EchoForum.Presentation::EchoForum.Presentation.ForumPrototypeController
+  m_Script: {fileID: 11500000, guid: c601060a9e2bd7148bd333adf56920d0, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: EchoForum.Presentation::EchoForum.Presentation.MainMenuController
 --- !u!114 &1893456084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,11 +172,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
   m_PanelSettings: {fileID: 0}
   m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 9197481963319205126, guid: 0c954a77128acf64193acf7f41b69c36, type: 3}
+  sourceAsset: {fileID: 9197481963319205126, guid: 2669d51a97a769b4fb7e1c8a21789079, type: 3}
   m_SortingOrder: 0
   m_Position: 0
   m_WorldSpaceSizeMode: 1

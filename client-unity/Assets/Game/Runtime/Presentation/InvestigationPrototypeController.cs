@@ -8,19 +8,25 @@ namespace EchoForum.Presentation
     public sealed class InvestigationPrototypeController : MonoBehaviour
     {
         [SerializeField] private string fallbackCaseId = "case-observation-01";
-        private string CaseId => string.IsNullOrEmpty(ForumNavigationState.ActiveCaseId) ? fallbackCaseId : ForumNavigationState.ActiveCaseId;
+        private string caseId;
         private CaseUseCases cases;
+        private IGameFlowCoordinator flow;
         private CaseSnapshot snapshot;
         private string message = "测试规则 01：接近并调查观测点 A。";
         private bool showResult;
         private InvestigationOverlay overlay;
 
-        public void Initialize(CaseUseCases useCases) { cases = useCases; }
+        public void Initialize(CaseUseCases useCases, IGameFlowCoordinator gameFlow, string activeCaseId)
+        {
+            cases = useCases;
+            flow = gameFlow;
+            caseId = string.IsNullOrEmpty(activeCaseId) ? fallbackCaseId : activeCaseId;
+        }
 
         private void Start()
         {
-            if (cases == null) { enabled = false; return; }
-            snapshot = cases.GetSnapshot(CaseId);
+            if (cases == null || flow == null) { enabled = false; return; }
+            snapshot = cases.GetSnapshot(caseId);
             showResult = snapshot.Status == CaseStatus.Closed;
             overlay = new InvestigationOverlay(GetComponent<UIDocument>().rootVisualElement, Settle, ReturnToForum);
             RefreshOverlay();
@@ -31,40 +37,37 @@ namespace EchoForum.Presentation
             if (showResult) return;
             if (pointId == "observation-a")
             {
-                cases.Investigate(CaseId, pointId);
+                cases.Investigate(caseId, pointId);
                 message = "观测点 A 已记录。记录残片已解锁。";
             }
             else if (pointId == "record-fragment")
             {
                 if (!snapshot.DiscoveredClues.Contains("observation-a")) { message = "记录残片尚未解锁：请先调查观测点 A。"; RefreshOverlay(); return; }
-                cases.Investigate(CaseId, pointId);
-                cases.Acquire(CaseId, "test-tool");
+                cases.Investigate(caseId, pointId);
+                cases.Acquire(caseId, "test-tool");
                 message = "记录残片已归档：已获得测试道具。";
             }
             else if (pointId == "disposal-object")
             {
                 if (!snapshot.HeldItems.Contains("test-tool")) { message = "处置对象需要测试道具。"; RefreshOverlay(); return; }
-                cases.Resolve(CaseId, pointId);
+                cases.Resolve(caseId, pointId);
                 message = "处置完成：现在可以结算。";
             }
-            snapshot = cases.GetSnapshot(CaseId);
+            snapshot = cases.GetSnapshot(caseId);
             RefreshOverlay();
         }
 
         private void Settle()
         {
             if (snapshot.Status != CaseStatus.ReadyToSettle) return;
-            cases.Settle(CaseId);
-            snapshot = cases.GetSnapshot(CaseId);
+            cases.Settle(caseId);
+            snapshot = cases.GetSnapshot(caseId);
             showResult = true;
             message = "结算完成。";
             RefreshOverlay();
         }
 
-        private void ReturnToForum()
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene("ForumPrototype");
-        }
+        private void ReturnToForum() => flow.ReturnToForum();
 
         private void RefreshOverlay()
         {

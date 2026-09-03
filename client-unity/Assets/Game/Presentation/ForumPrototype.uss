@@ -92,3 +92,7 @@
 .case-status { color: #d3d49a; font-size: 12px; }
 .case-enter-button { background-color: #566045; border-width: 1px; border-color: #8b956c; border-radius: 0; color: #f0efd3; font-size: 12px; }
 .case-enter-button:disabled { opacity: 1; background-color: #202b29; border-color: #39443f; color: #7b857d; }
+
+.player-status { color: #aeb694; font-size: 11px; margin-right: 9px; }
+.main-menu-button { background-color: transparent; border-width: 1px; border-color: #3c4c45; border-radius: 0; color: #99a49b; font-size: 11px; margin-right: 2px; }
+.main-menu-button:hover { color: #e4e5c4; background-color: #182622; }
