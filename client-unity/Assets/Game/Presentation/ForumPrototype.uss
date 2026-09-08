@@ -96,3 +96,14 @@
 .player-status { color: #aeb694; font-size: 11px; margin-right: 9px; }
 .main-menu-button { background-color: transparent; border-width: 1px; border-color: #3c4c45; border-radius: 0; color: #99a49b; font-size: 11px; margin-right: 2px; }
 .main-menu-button:hover { color: #e4e5c4; background-color: #182622; }
+
+.compose-view { flex-grow: 1; background-color: #101b18; border-width: 1px; border-color: #34473f; padding: 22px; }
+.forum-field { margin-top: 12px; }
+.forum-body-field { margin-top: 12px; min-height: 150px; }
+.reply-composer { background-color: #101b18; border-top-width: 1px; border-top-color: #36483f; margin-top: 16px; padding: 14px; }
+.reply-input { min-height: 74px; margin-bottom: 8px; }
+.form-actions { flex-direction: row; align-items: center; margin-top: 8px; }
+.form-message { color: #c28c73; font-size: 11px; flex-grow: 1; white-space: normal; }
+.forum-notice { color: #d5c881; background-color: #23271c; border-left-width: 2px; border-left-color: #9e9454; padding: 9px 11px; margin-bottom: 10px; white-space: normal; }
+.profile-name { color: #d9dfbb; font-size: 16px; -unity-font-style: bold; margin-bottom: 8px; }
+.profile-card { border-color: #52624b; }

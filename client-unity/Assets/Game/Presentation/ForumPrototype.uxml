@@ -8,9 +8,8 @@
             <ui:VisualElement class="topbar-spacer" />
             <ui:Label text="同步状态：离线" class="offline-status" />
             <ui:Label name="player-status" class="player-status" />
+            <ui:Button name="new-thread-button" text="发布主题" class="main-menu-button" />
             <ui:Button name="main-menu-button" text="主菜单" class="main-menu-button" />
-            <ui:Button text="登录（暂不可用）" enabled="false" class="placeholder-button" />
-            <ui:Button text="发帖（暂不可用）" enabled="false" class="placeholder-button" />
         </ui:VisualElement>
         <ui:VisualElement class="body-frame">
             <ui:VisualElement class="left-rail">
@@ -18,49 +17,52 @@
                 <ui:VisualElement name="board-navigation" class="board-navigation" />
                 <ui:VisualElement class="rail-rule" />
                 <ui:Label text="档案提示" class="section-label" />
-                <ui:Label text="当前内容来自随游戏附带的演示快照。网络、账号和发布功能尚未接入。" class="rail-note" />
+                <ui:Label text="静态内容与本地发表内容在本机合并显示。" class="rail-note" />
             </ui:VisualElement>
             <ui:VisualElement class="main-column">
                 <ui:VisualElement name="home-view" class="home-view">
                     <ui:VisualElement class="home-heading">
-                        <ui:VisualElement>
-                            <ui:Label text="今夜的新记录" class="page-title" />
-                            <ui:Label text="按最近活动排序 · 本地内容快照" class="page-description" />
-                        </ui:VisualElement>
+                        <ui:VisualElement><ui:Label text="今夜的新记录" class="page-title" /><ui:Label text="按最近活动排序 · 本地内容快照" class="page-description" /></ui:VisualElement>
                         <ui:Label text="UTC+0" class="time-zone" />
                     </ui:VisualElement>
+                    <ui:Label name="forum-notice" class="forum-notice" />
                     <ui:VisualElement name="thread-list" class="thread-list" />
+                </ui:VisualElement>
+                <ui:VisualElement name="compose-view" class="compose-view">
+                    <ui:Button name="compose-back-button" text="← 返回主题列表" class="back-button" />
+                    <ui:Label text="发布本地主题" class="detail-title" />
+                    <ui:Label text="这条记录只保存到当前设备的本地档案。" class="page-description" />
+                    <ui:DropdownField name="thread-board" label="发布板块" class="forum-field" />
+                    <ui:TextField name="thread-title" label="主题标题" class="forum-field" />
+                    <ui:TextField name="thread-body" label="正文" multiline="true" class="forum-body-field" />
+                    <ui:Label name="thread-form-message" class="form-message" />
+                    <ui:VisualElement class="form-actions"><ui:Button name="publish-thread-button" text="发布本地主题" class="case-enter-button" /><ui:Button name="cancel-thread-button" text="取消" class="main-menu-button" /></ui:VisualElement>
                 </ui:VisualElement>
                 <ui:VisualElement name="detail-view" class="detail-view">
                     <ui:Button name="back-button" text="← 返回主题列表" class="back-button" />
                     <ui:VisualElement name="detail-content" class="detail-content" />
-                    <ui:VisualElement class="reply-locked">
-                        <ui:Label text="回复功能将在账号与本地存档接入后开放。" class="reply-locked-text" />
-                        <ui:Button text="写回复（暂不可用）" enabled="false" class="placeholder-button" />
+                    <ui:VisualElement class="reply-composer">
+                        <ui:Label text="本地回复" class="reply-heading" />
+                        <ui:TextField name="reply-body" multiline="true" class="reply-input" />
+                        <ui:VisualElement class="form-actions"><ui:Label name="reply-form-message" class="form-message" /><ui:Button name="publish-reply-button" text="发布回复" class="case-enter-button" /></ui:VisualElement>
                     </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement class="right-rail">
-                <ui:VisualElement class="sidebar-card announcement-card">
-                    <ui:Label text="系统公告" class="sidebar-title" />
-                    <ui:Label text="请保留原始记录。此原型不包含真实帐号或服务器连接。" class="sidebar-copy" />
-                    <ui:Label text="ARCHIVE BUILD 0.1" class="build-stamp" />
+                <ui:VisualElement class="sidebar-card profile-card">
+                    <ui:Label text="本地档案" class="sidebar-title" />
+                    <ui:Label name="profile-name" class="profile-name" />
+                    <ui:Label name="profile-joined" class="sidebar-copy" />
+                    <ui:Label name="profile-thread-count" class="sidebar-copy" />
+                    <ui:Label name="profile-reply-count" class="sidebar-copy" />
+                    <ui:Label name="profile-case-count" class="sidebar-copy" />
+                    <ui:Button name="continue-investigation-button" text="继续调查" class="case-enter-button event-button" />
                 </ui:VisualElement>
-                <ui:VisualElement class="sidebar-card">
-                    <ui:Label text="在线记录员" class="sidebar-title" />
-                    <ui:VisualElement name="online-users" class="online-users" />
-                </ui:VisualElement>
-                <ui:VisualElement class="sidebar-card">
-                    <ui:Label text="正在被讨论" class="sidebar-title" />
-                    <ui:VisualElement name="hot-threads" class="hot-threads" />
-                </ui:VisualElement>
-                <ui:VisualElement class="sidebar-card event-card">
-                    <ui:Label text="事件入口" class="sidebar-title" />
-                    <ui:Label text="事件入口由帖子绑定配置决定。" class="sidebar-copy" />
-                    <ui:Button text="进入事件（暂不可用）" enabled="false" class="placeholder-button event-button" />
-                </ui:VisualElement>
+                <ui:VisualElement class="sidebar-card announcement-card"><ui:Label text="系统公告" class="sidebar-title" /><ui:Label text="本地主题和回复不会改写随游戏附带的静态内容。" class="sidebar-copy" /><ui:Label text="ARCHIVE BUILD 0.1" class="build-stamp" /></ui:VisualElement>
+                <ui:VisualElement class="sidebar-card"><ui:Label text="在线记录员" class="sidebar-title" /><ui:VisualElement name="online-users" class="online-users" /></ui:VisualElement>
+                <ui:VisualElement class="sidebar-card"><ui:Label text="正在被讨论" class="sidebar-title" /><ui:VisualElement name="hot-threads" class="hot-threads" /></ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement class="footer"><ui:Label text="ECHO ARCHIVE · 所有数据均为本地模拟内容" class="footer-label" /></ui:VisualElement>
+        <ui:VisualElement class="footer"><ui:Label text="ECHO ARCHIVE · 所有动态内容均为本地档案数据" class="footer-label" /></ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

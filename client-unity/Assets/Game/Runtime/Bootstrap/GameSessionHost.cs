@@ -14,6 +14,7 @@ namespace EchoForum.Bootstrap
         public ForumCaseUseCases ForumCases { get; private set; }
         public GameFlowCoordinator Flow { get; private set; }
         public static GameSessionHost Require() => Instance ?? new GameObject("GameSessionHost").AddComponent<GameSessionHost>();
+
         private void Awake()
         {
             if (Instance != null && Instance != this) { Destroy(gameObject); return; }
@@ -22,7 +23,7 @@ namespace EchoForum.Bootstrap
             Session = new GameSession(new JsonGameSaveRepository());
             Cases = new CaseUseCases(Session);
             var content = new ContentDrivenForumCatalog();
-            Forum = new ForumQueries(content);
+            Forum = new ForumQueries(content, Session);
             ForumCases = new ForumCaseUseCases(content, Cases);
             Flow = new GameFlowCoordinator(Session, ForumCases, new UnityGameNavigator());
             UnityEngine.Application.quitting += SaveOnQuit;

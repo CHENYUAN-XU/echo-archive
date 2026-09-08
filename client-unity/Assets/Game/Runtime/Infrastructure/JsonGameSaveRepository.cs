@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace EchoForum.Infrastructure
 {
-    /// <summary>Single local MVP save. It persists progress, never static ScriptableObject content.</summary>
+    /// <summary>Single local MVP save. It persists player state and progress, never static ScriptableObject content.</summary>
     public sealed class JsonGameSaveRepository : IGameSaveRepository
     {
         private const string SaveName = "echo-archive-save.json";
@@ -16,11 +16,7 @@ namespace EchoForum.Infrastructure
         private readonly string path;
 
         public JsonGameSaveRepository() : this(UnityEngine.Application.persistentDataPath) { }
-        public JsonGameSaveRepository(string directory)
-        {
-            this.directory = directory;
-            path = Path.Combine(directory, SaveName);
-        }
+        public JsonGameSaveRepository(string directory) { this.directory = directory; path = Path.Combine(directory, SaveName); }
 
         public GameSaveLoadResult Load()
         {
@@ -34,10 +30,7 @@ namespace EchoForum.Infrastructure
                 Normalize(save);
                 return new GameSaveLoadResult(GameSaveLoadStatus.Valid, save, null);
             }
-            catch (Exception)
-            {
-                return new GameSaveLoadResult(GameSaveLoadStatus.Corrupt, null, "存档不可用：读取失败。新建档案前会保留备份。");
-            }
+            catch (Exception) { return new GameSaveLoadResult(GameSaveLoadStatus.Corrupt, null, "存档不可用：读取失败。新建档案前会保留备份。"); }
         }
 
         public void Save(GameSaveData save)
@@ -54,8 +47,7 @@ namespace EchoForum.Infrastructure
         public void BackupUnreadableSave()
         {
             if (!File.Exists(path)) return;
-            var backup = path + ".corrupt-" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + ".json";
-            File.Copy(path, backup, false);
+            File.Copy(path, path + ".corrupt-" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + ".json", false);
         }
 
         private GameSaveLoadResult MigrateLegacyCaseSave()
@@ -66,13 +58,10 @@ namespace EchoForum.Infrastructure
             {
                 var snapshots = ReadLegacySnapshots(File.ReadAllText(legacyPath));
                 if (snapshots.Count == 0) return new GameSaveLoadResult(GameSaveLoadStatus.Missing, null, null);
-                var migrated = new GameSaveData { CaseSnapshots = snapshots, ForumState = new ForumState(), Navigation = new NavigationContext() };
+                var migrated = new GameSaveData { SaveVersion = 2, CaseSnapshots = snapshots, ForumState = new ForumState(), ForumDynamicState = new ForumDynamicState(), Navigation = new NavigationContext() };
                 return new GameSaveLoadResult(GameSaveLoadStatus.Valid, migrated, "已发现旧事件进度；创建本地档案后会迁移到总存档。");
             }
-            catch (Exception)
-            {
-                return new GameSaveLoadResult(GameSaveLoadStatus.Missing, null, null);
-            }
+            catch (Exception) { return new GameSaveLoadResult(GameSaveLoadStatus.Missing, null, null); }
         }
 
         private static List<CaseSnapshot> ReadLegacySnapshots(string json)
@@ -85,7 +74,13 @@ namespace EchoForum.Infrastructure
 
         private static void Normalize(GameSaveData save)
         {
+            if (save.SaveVersion < 2) save.SaveVersion = 2;
             if (save.ForumState == null) save.ForumState = new ForumState();
+            if (save.ForumDynamicState == null) save.ForumDynamicState = new ForumDynamicState();
+            if (save.ForumDynamicState.PlayerThreads == null) save.ForumDynamicState.PlayerThreads = new List<PlayerCreatedThread>();
+            if (save.ForumDynamicState.PlayerReplies == null) save.ForumDynamicState.PlayerReplies = new List<PlayerCreatedReply>();
+            if (save.ForumDynamicState.SystemCaseReplies == null) save.ForumDynamicState.SystemCaseReplies = new List<SystemCaseReply>();
+            if (save.ForumDynamicState.SystemClosureCaseIds == null) save.ForumDynamicState.SystemClosureCaseIds = new List<string>();
             if (save.Navigation == null) save.Navigation = new NavigationContext();
             if (save.CaseSnapshots == null) save.CaseSnapshots = new List<CaseSnapshot>();
             if (save.GlobalFlags == null) save.GlobalFlags = new List<SaveFlag>();

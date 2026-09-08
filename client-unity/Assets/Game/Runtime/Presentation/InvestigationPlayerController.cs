@@ -23,5 +23,4 @@ namespace EchoForum.Presentation
         }
     }
 
-    public sealed class InvestigationPoint : MonoBehaviour { public string PointId; }
 }

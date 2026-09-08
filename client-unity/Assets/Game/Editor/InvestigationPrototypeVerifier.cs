@@ -7,6 +7,7 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 namespace EchoForum.Editor
 {
@@ -35,7 +36,9 @@ namespace EchoForum.Editor
             EditorSceneManager.OpenScene("Assets/Game/Scenes/InvestigationPrototype.unity");
             Require(UnityEngine.Object.FindFirstObjectByType<InvestigationPrototypeController>() != null, "Investigation controller is missing.");
             Require(UnityEngine.Object.FindFirstObjectByType<UIDocument>() != null, "UI Toolkit document is missing.");
-            Require(UnityEngine.Object.FindObjectsByType<InvestigationPoint>(FindObjectsSortMode.None).Length == 3, "The scene does not contain three investigation points.");
+            var pointCount = 0;
+            foreach (var root in SceneManager.GetActiveScene().GetRootGameObjects()) pointCount += root.GetComponentsInChildren<InvestigationPoint>(true).Length;
+            Require(pointCount == 3, "The scene does not contain three investigation points.");
             Require(UnityEngine.Object.FindFirstObjectByType<InvestigationPlayerController>() != null, "Observer controller is missing.");
             Debug.Log("Investigation prototype verification passed: ordered case flow, JSON persistence, greybox scene, observer, and UI Toolkit overlay.");
         }
