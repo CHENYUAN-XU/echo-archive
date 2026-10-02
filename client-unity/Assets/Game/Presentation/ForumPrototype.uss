@@ -12,6 +12,7 @@
 
 .forum-shell {
     flex-grow: 1;
+    min-height: 0;
     background-color: #172522;
     color: var(--ink);
     padding: 18px 24px 14px;
@@ -20,7 +21,10 @@
 }
 
 .grain-overlay { position: absolute; left: 0; top: 0; right: 0; bottom: 0; background-color: rgba(160, 182, 153, 0.025); }
-.topbar { height: 56px; flex-direction: row; align-items: center; border-bottom-width: 1px; border-bottom-color: var(--line); padding-bottom: 12px; }
+.topbar { height: 84px; flex-shrink: 0; border-bottom-width: 1px; border-bottom-color: var(--line); padding-bottom: 4px; }
+.topbar-brand-row, .topbar-nav-row { flex-direction: row; align-items: center; min-height: 37px; }
+.topbar-brand-row { border-bottom-width: 1px; border-bottom-color: #34483f; }
+.topbar-nav-row { padding-top: 4px; }
 .wordmark { background-color: transparent; color: #d7dc9e; border-width: 0; font-size: 21px; -unity-font-style: bold; letter-spacing: 2.5px; padding-left: 0; }
 .wordmark:hover { color: #fcf5b7; background-color: transparent; }
 .subtitle { color: var(--muted); margin-left: 12px; font-size: 14px; }
@@ -28,10 +32,10 @@
 .offline-status { color: var(--warning); font-size: 13px; margin-right: 12px; }
 .placeholder-button { color: #737d77; background-color: #17211f; border-color: #2b3a36; border-width: 1px; border-radius: 0; font-size: 11px; margin-left: 8px; }
 .placeholder-button:disabled { opacity: 1; }
-.body-frame { flex-grow: 1; flex-direction: row; padding-top: 18px; padding-bottom: 12px; }
-.left-rail { width: 190px; padding-right: 18px; border-right-width: 1px; border-right-color: var(--line); }
-.main-column { flex-grow: 1; min-width: 420px; padding-left: 20px; padding-right: 20px; }
-.right-rail { width: 248px; padding-left: 18px; border-left-width: 1px; border-left-color: var(--line); }
+.body-frame { flex-grow: 1; min-height: 0; flex-direction: row; padding-top: 10px; padding-bottom: 8px; }
+.left-rail { width: 190px; flex-shrink: 0; padding-right: 18px; border-right-width: 1px; border-right-color: var(--line); }
+.main-column { flex-grow: 1; flex-shrink: 1; min-width: 0; min-height: 0; padding-left: 20px; padding-right: 20px; }
+.right-rail { width: 248px; flex-shrink: 0; padding-left: 18px; border-left-width: 1px; border-left-color: var(--line); }
 .section-label, .sidebar-title { color: #dde2aa; font-size: 13px; letter-spacing: 1px; -unity-font-style: bold; margin-bottom: 10px; }
 .board-navigation { margin-bottom: 18px; }
 .board-link { background-color: #253631; border-width: 1px; border-color: #455b53; border-left-width: 3px; border-left-color: transparent; border-radius: 0; color: #e1e9dc; padding: 10px 12px; margin-bottom: 5px; font-size: 14px; -unity-text-align: middle-left; }
@@ -42,6 +46,7 @@
 .page-title { color: #e3e4d6; font-size: 25px; -unity-font-style: bold; letter-spacing: 1px; }
 .page-description, .time-zone { color: var(--muted); font-size: 14px; margin-top: 4px; }
 .time-zone { color: #c2cfc3; }
+.home-view, .compose-view, .detail-view, .community-view { flex-grow: 1; min-height: 0; }
 .thread-list { flex-grow: 1; }
 .thread-card { display: flex; background-color: #263833; border-width: 1px; border-color: #5a7268; border-radius: 0; color: var(--ink); margin-bottom: 11px; padding: 16px 18px 14px; -unity-text-align: middle-left; }
 .thread-card:hover { background-color: #1a2925; border-color: #65715c; }
@@ -114,23 +119,41 @@
 .compact-topbar .subtitle { display: none; }
 .compact-topbar .wordmark { font-size: 18px; letter-spacing: 1.5px; }
 .compact-topbar .mode-button { margin-left: 6px; padding: 8px 9px; font-size: 13px; }
+.compact-offline .right-rail { display: none; }
+.narrow-forum .left-rail { width: 170px; }
+.narrow-forum .community-heading { flex-direction: row; align-items: center; flex-wrap: wrap; }
+.narrow-forum .community-heading-actions { flex-wrap: wrap; }
+.narrow-forum .community-heading .page-description { display: none; }
+.narrow-forum .community-content-row { flex-direction: column; }
+.narrow-forum .community-board-column { width: 100%; margin-right: 0; margin-bottom: 8px; padding: 8px; }
+.narrow-forum .community-board-column .section-label { margin-bottom: 4px; }
+.narrow-forum #community-board-list { flex-direction: row; flex-wrap: nowrap; }
+.narrow-forum #community-board-list .board-link { margin-right: 6px; margin-bottom: 0; white-space: nowrap; }
+.narrow-forum .community-topic-column { width: 100%; min-width: 0; }
+.compact-profile-status { display: none; color: #d8e3d0; font-size: 13px; white-space: normal; margin-top: 12px; }
+.compact-offline .compact-profile-status { display: flex; }
+.compact-resume-button { display: none; margin-top: 10px; }
+.compact-offline .compact-resume-visible { display: flex; }
 .community-view { display: none; flex-grow: 1; }
-.community-heading { flex-direction: row; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.community-heading { flex-direction: row; align-items: center; justify-content: space-between; margin-bottom: 8px; }
 .community-heading-actions, .community-auth-actions, .community-list-heading, .community-account-heading { flex-direction: row; align-items: center; }
-.community-status { background-color: #34483d; border-left-width: 3px; border-left-color: #c9d594; color: #f0f3e8; font-size: 15px; padding: 11px 14px; margin-bottom: 16px; white-space: normal; }
+.community-heading-actions .account-name { font-size: 14px; margin-right: 8px; }
+.community-heading-actions .main-menu-button { font-size: 13px; }
+.community-status { background-color: #34483d; border-left-width: 3px; border-left-color: #c9d594; color: #f0f3e8; font-size: 15px; padding: 7px 10px; margin-bottom: 9px; white-space: normal; }
 .community-error { background-color: #503b35; border-left-color: #efb092; color: #ffe2d3; }
-.community-account-card { background-color: #2a3d36; border-width: 1px; border-color: #688173; padding: 11px 16px; margin-bottom: 14px; }
+.community-account-card { display: none; background-color: #2a3d36; border-width: 1px; border-color: #688173; padding: 11px 16px; margin-bottom: 10px; }
 .community-account-heading { justify-content: space-between; }
 .community-account-heading .sidebar-title { margin-bottom: 0; }
 .community-account-heading .account-name { margin-left: auto; margin-right: 14px; }
 .account-name { color: #e8efc5; font-size: 16px; -unity-font-style: bold; }
 .community-auth-form { display: none; flex-direction: column; margin-top: 12px; margin-bottom: 12px; }
-.community-auth-field { margin-top: 9px; }
+.community-auth-field { margin-top: 9px; max-width: 720px; }
 .community-auth-actions { margin-top: 12px; }
 .community-consent { color: #e0e9dc; font-size: 14px; margin-top: 12px; white-space: normal; }
 .community-content-row { flex-direction: row; align-items: flex-start; }
 .community-board-column { width: 220px; background-color: #273a34; border-width: 1px; border-color: #597267; padding: 16px; margin-right: 16px; }
-.community-topic-column { flex-grow: 1; min-width: 360px; }
+#community-board-strip { flex-grow: 0; }
+.community-topic-column { flex-grow: 1; min-width: 0; }
 .community-list-heading { justify-content: space-between; margin-bottom: 12px; }
 .community-list-heading .detail-title { margin-bottom: 0; }
 .empty-state { color: #d0dccc; font-size: 16px; padding: 22px; background-color: #2b3d37; border-width: 1px; border-color: #597267; }
@@ -140,3 +163,9 @@
 .forum-shell .unity-text-field__input:focus { background-color: #3b5548; border-color: #d0de9c; }
 .forum-shell .unity-toggle__label { color: #e0e9dc; font-size: 14px; white-space: normal; }
 .forum-shell .unity-toggle__input { background-color: #324940; }
+.forum-shell .unity-scroller { background-color: #23342e; }
+.forum-shell .unity-scroller .unity-repeat-button { background-color: #30443e; -unity-background-image-tint-color: #d3dfcf; }
+.forum-shell .unity-scroller .unity-base-slider__tracker { background-color: #31463e; }
+.forum-shell .unity-scroller .unity-base-slider__dragger { background-color: #718b78; border-width: 1px; border-color: #9bae9b; }
+.forum-shell .unity-scroll-view__vertical-scroller { width: 14px; }
+.forum-shell .unity-scroll-view__horizontal-scroller { height: 14px; }

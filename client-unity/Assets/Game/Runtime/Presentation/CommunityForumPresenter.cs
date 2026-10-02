@@ -17,6 +17,7 @@ namespace EchoForum.Presentation
         private readonly VisualElement boardList;
         private readonly VisualElement topicList;
         private readonly VisualElement detailContent;
+        private readonly VisualElement authCard;
         private readonly VisualElement authForm;
         private readonly Label status;
         private readonly Label accountName;
@@ -40,7 +41,7 @@ namespace EchoForum.Presentation
         private bool hasOpened;
         private bool authExpanded;
 
-        public CommunityForumPresenter(VisualElement root, CommunityForumUseCases forum, Action returnToArchive)
+        public CommunityForumPresenter(VisualElement root, CommunityForumUseCases forum)
         {
             this.forum = forum;
             home = root.Q<VisualElement>("community-home");
@@ -49,6 +50,7 @@ namespace EchoForum.Presentation
             boardList = root.Q<VisualElement>("community-board-list");
             topicList = root.Q<VisualElement>("community-topic-list");
             detailContent = root.Q<VisualElement>("community-detail-content");
+            authCard = root.Q<VisualElement>("community-auth-card");
             authForm = root.Q<VisualElement>("community-auth-form");
             status = root.Q<Label>("community-status");
             accountName = root.Q<Label>("community-account-name");
@@ -68,7 +70,6 @@ namespace EchoForum.Presentation
             publishReplyButton = root.Q<Button>("community-publish-reply");
 
             root.Q<Button>("community-refresh-button").clicked += () => Run(RefreshAsync);
-            root.Q<Button>("community-offline-button").clicked += returnToArchive;
             root.Q<Button>("community-login-button").clicked += () => Run(LoginAsync);
             root.Q<Button>("community-register-button").clicked += () => Run(RegisterAsync);
             logoutButton.clicked += () => Run(LogoutAsync);
@@ -252,7 +253,8 @@ namespace EchoForum.Presentation
         private void UpdateAuth()
         {
             var user = forum.CurrentUser;
-            accountName.text = user == null ? "未登录 · 可浏览公开内容" : "已登录：" + user.DisplayName;
+            accountName.text = user == null ? "访客" : user.DisplayName;
+            authCard.style.display = user == null && authExpanded ? DisplayStyle.Flex : DisplayStyle.None;
             authForm.style.display = user == null && authExpanded ? DisplayStyle.Flex : DisplayStyle.None;
             authToggleButton.style.display = user == null ? DisplayStyle.Flex : DisplayStyle.None;
             authToggleButton.text = authExpanded ? "收起表单" : "登录 / 注册";
