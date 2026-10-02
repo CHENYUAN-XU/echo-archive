@@ -10,7 +10,7 @@ namespace EchoForum.Bootstrap
         {
             var host = GameSessionHost.Require();
             var returnThread = host.Session.Navigation == null ? null : host.Session.Navigation.ReturnThreadId;
-            GetComponent<ForumPrototypeController>().Initialize(host.Forum, host.ForumCases, host.Flow, host.Session, returnThread);
+            GetComponent<ForumPrototypeController>().Initialize(host.Forum, host.Community, host.ForumCases, host.Flow, host.Session, returnThread);
         }
     }
 }

@@ -10,9 +10,11 @@ namespace EchoForum.Bootstrap
         public static GameSessionHost Instance { get; private set; }
         public GameSession Session { get; private set; }
         public ForumQueries Forum { get; private set; }
+        public CommunityForumUseCases Community { get; private set; }
         public CaseUseCases Cases { get; private set; }
         public ForumCaseUseCases ForumCases { get; private set; }
         public GameFlowCoordinator Flow { get; private set; }
+        private NodeBbForumGateway nodeBbGateway;
         public static GameSessionHost Require() => Instance ?? new GameObject("GameSessionHost").AddComponent<GameSessionHost>();
 
         private void Awake()
@@ -24,6 +26,8 @@ namespace EchoForum.Bootstrap
             Cases = new CaseUseCases(Session);
             var content = new ContentDrivenForumCatalog();
             Forum = new ForumQueries(content, Session);
+            nodeBbGateway = new NodeBbForumGateway("http://127.0.0.1:4567");
+            Community = new CommunityForumUseCases(nodeBbGateway);
             ForumCases = new ForumCaseUseCases(content, Cases);
             Flow = new GameFlowCoordinator(Session, ForumCases, new UnityGameNavigator());
             UnityEngine.Application.quitting += SaveOnQuit;
@@ -34,6 +38,7 @@ namespace EchoForum.Bootstrap
             if (Instance != this) return;
             UnityEngine.Application.quitting -= SaveOnQuit;
             Session?.SaveNow();
+            nodeBbGateway?.Dispose();
             Instance = null;
         }
 

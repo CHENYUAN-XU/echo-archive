@@ -4,15 +4,17 @@
         <ui:VisualElement class="grain-overlay" picking-mode="Ignore" />
         <ui:VisualElement class="topbar">
             <ui:Button name="home-button" text="ECHO ARCHIVE" class="wordmark" />
-            <ui:Label text="留声论坛 / 本地离线快照" class="subtitle" />
+            <ui:Label text="留声论坛" class="subtitle" />
+            <ui:Button name="archive-tab-button" text="档案事件 · 离线" class="mode-button mode-selected" />
+            <ui:Button name="community-tab-button" text="社区讨论 · NodeBB" class="mode-button" />
             <ui:VisualElement class="topbar-spacer" />
-            <ui:Label text="同步状态：离线" class="offline-status" />
+            <ui:Label name="connection-status" text="本地档案" class="offline-status" />
             <ui:Label name="player-status" class="player-status" />
             <ui:Button name="new-thread-button" text="发布主题" class="main-menu-button" />
             <ui:Button name="main-menu-button" text="主菜单" class="main-menu-button" />
         </ui:VisualElement>
         <ui:VisualElement class="body-frame">
-            <ui:VisualElement class="left-rail">
+            <ui:VisualElement name="left-rail" class="left-rail">
                 <ui:Label text="板块导航" class="section-label" />
                 <ui:VisualElement name="board-navigation" class="board-navigation" />
                 <ui:VisualElement class="rail-rule" />
@@ -23,7 +25,7 @@
                 <ui:VisualElement name="home-view" class="home-view">
                     <ui:VisualElement class="home-heading">
                         <ui:VisualElement><ui:Label text="今夜的新记录" class="page-title" /><ui:Label text="按最近活动排序 · 本地内容快照" class="page-description" /></ui:VisualElement>
-                        <ui:Label text="UTC+0" class="time-zone" />
+                        <ui:Label text="本地时间" class="time-zone" />
                     </ui:VisualElement>
                     <ui:Label name="forum-notice" class="forum-notice" />
                     <ui:VisualElement name="thread-list" class="thread-list" />
@@ -47,8 +49,47 @@
                         <ui:VisualElement class="form-actions"><ui:Label name="reply-form-message" class="form-message" /><ui:Button name="publish-reply-button" text="发布回复" class="case-enter-button" /></ui:VisualElement>
                     </ui:VisualElement>
                 </ui:VisualElement>
+                <ui:ScrollView name="community-view" class="community-view">
+                    <ui:VisualElement class="community-heading">
+                        <ui:VisualElement><ui:Label text="社区讨论" class="page-title" /><ui:Label text="NodeBB 本机服务 · 真实板块、主题与回复" class="page-description" /></ui:VisualElement>
+                        <ui:VisualElement class="community-heading-actions"><ui:Button name="community-refresh-button" text="刷新" class="main-menu-button" /><ui:Button name="community-offline-button" text="返回离线档案" class="main-menu-button" /></ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:Label name="community-status" text="选择社区讨论以连接本机论坛。" class="community-status" />
+                    <ui:VisualElement name="community-home">
+                        <ui:VisualElement class="community-account-card">
+                            <ui:VisualElement class="community-account-heading"><ui:Label text="NodeBB 社区账号" class="sidebar-title" /><ui:Label name="community-account-name" text="未登录 · 可浏览公开内容" class="account-name" /><ui:Button name="community-auth-toggle" text="登录 / 注册" class="main-menu-button" /></ui:VisualElement>
+                            <ui:VisualElement name="community-auth-form" class="community-auth-form">
+                                <ui:TextField name="community-username" label="用户名" class="community-auth-field" />
+                                <ui:TextField name="community-email" label="邮箱（注册时填写）" class="community-auth-field" />
+                                <ui:TextField name="community-password" label="密码" class="community-auth-field" />
+                                <ui:Toggle name="community-consent" label="注册时同意本机测试论坛处理账号信息及发送通知" class="community-consent" />
+                                <ui:VisualElement class="community-auth-actions"><ui:Button name="community-login-button" text="登录" class="case-enter-button" /><ui:Button name="community-register-button" text="注册" class="main-menu-button" /></ui:VisualElement>
+                            </ui:VisualElement>
+                            <ui:Button name="community-logout-button" text="登出社区账号" class="main-menu-button" />
+                            <ui:Label text="本地玩家档案仅用于单机调查存档，社区账号由 NodeBB 管理。密码不会存入游戏存档。" class="sidebar-copy" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="community-content-row">
+                            <ui:VisualElement class="community-board-column"><ui:Label text="真实板块" class="section-label" /><ui:VisualElement name="community-board-list" /></ui:VisualElement>
+                            <ui:VisualElement class="community-topic-column"><ui:VisualElement class="community-list-heading"><ui:Label name="community-board-title" text="请选择板块" class="detail-title" /><ui:Button name="community-new-topic-button" text="发布社区主题" class="case-enter-button" /></ui:VisualElement><ui:VisualElement name="community-topic-list" /></ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="community-compose" class="compose-view">
+                        <ui:Button name="community-compose-back" text="← 返回社区列表" class="back-button" />
+                        <ui:Label text="发布社区主题" class="detail-title" />
+                        <ui:Label text="发布后由 NodeBB 保存，浏览器中也可看到。" class="page-description" />
+                        <ui:DropdownField name="community-compose-board" label="社区板块" class="forum-field" />
+                        <ui:TextField name="community-compose-title" label="标题" class="forum-field" />
+                        <ui:TextField name="community-compose-body" label="正文" multiline="true" class="forum-body-field" />
+                        <ui:VisualElement class="form-actions"><ui:Button name="community-publish-topic" text="发布到 NodeBB" class="case-enter-button" /><ui:Button name="community-cancel-topic" text="取消" class="main-menu-button" /></ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="community-detail" class="detail-view">
+                        <ui:Button name="community-detail-back" text="← 返回社区列表" class="back-button" />
+                        <ui:VisualElement name="community-detail-content" />
+                        <ui:VisualElement class="reply-composer"><ui:Label text="发表社区回复" class="reply-heading" /><ui:TextField name="community-reply-body" multiline="true" class="reply-input" /><ui:Button name="community-publish-reply" text="发布到 NodeBB" class="case-enter-button" /></ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:ScrollView>
             </ui:VisualElement>
-            <ui:VisualElement class="right-rail">
+            <ui:VisualElement name="right-rail" class="right-rail">
                 <ui:VisualElement class="sidebar-card profile-card">
                     <ui:Label text="本地档案" class="sidebar-title" />
                     <ui:Label name="profile-name" class="profile-name" />
@@ -59,10 +100,10 @@
                     <ui:Button name="continue-investigation-button" text="继续调查" class="case-enter-button event-button" />
                 </ui:VisualElement>
                 <ui:VisualElement class="sidebar-card announcement-card"><ui:Label text="系统公告" class="sidebar-title" /><ui:Label text="本地主题和回复不会改写随游戏附带的静态内容。" class="sidebar-copy" /><ui:Label text="ARCHIVE BUILD 0.1" class="build-stamp" /></ui:VisualElement>
-                <ui:VisualElement class="sidebar-card"><ui:Label text="在线记录员" class="sidebar-title" /><ui:VisualElement name="online-users" class="online-users" /></ui:VisualElement>
-                <ui:VisualElement class="sidebar-card"><ui:Label text="正在被讨论" class="sidebar-title" /><ui:VisualElement name="hot-threads" class="hot-threads" /></ui:VisualElement>
+                <ui:VisualElement class="sidebar-card"><ui:Label text="预置账号" class="sidebar-title" /><ui:VisualElement name="online-users" class="online-users" /></ui:VisualElement>
+                <ui:VisualElement class="sidebar-card"><ui:Label text="近期档案" class="sidebar-title" /><ui:VisualElement name="hot-threads" class="hot-threads" /></ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement class="footer"><ui:Label text="ECHO ARCHIVE · 所有动态内容均为本地档案数据" class="footer-label" /></ui:VisualElement>
+        <ui:VisualElement class="footer"><ui:Label text="ECHO ARCHIVE · 档案事件存于本机 · 社区讨论来自 NodeBB" class="footer-label" /></ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

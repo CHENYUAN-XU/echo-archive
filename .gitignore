@@ -4,6 +4,7 @@
 *.log
 exports/
 forum-runtime/data/runtime.json
+/local-services/
 
 # Unity generated files — source assets and Packages are retained.
 /client-unity/[Ll]ibrary/

@@ -83,7 +83,9 @@ namespace EchoForum.Domain
             IReadOnlyList<string> tags,
             bool isPinned,
             bool isOfficial,
-            string summary = null)
+            string summary = null,
+            int? replyCountOverride = null,
+            DateTimeOffset? lastActivityOverride = null)
         {
             Id = id;
             Board = board;
@@ -94,6 +96,8 @@ namespace EchoForum.Domain
             IsPinned = isPinned;
             IsOfficial = isOfficial;
             Summary = summary;
+            ReplyCountOverride = replyCountOverride;
+            LastActivityOverride = lastActivityOverride;
         }
 
         public string Id { get; }
@@ -105,7 +109,9 @@ namespace EchoForum.Domain
         public bool IsPinned { get; }
         public bool IsOfficial { get; }
         public string Summary { get; }
-        public int ReplyCount => Replies.Count;
-        public DateTimeOffset LastActivityUtc => ReplyCount > 0 ? Replies[ReplyCount - 1].PublishedAtUtc : OriginalPost.PublishedAtUtc;
+        private int? ReplyCountOverride { get; }
+        private DateTimeOffset? LastActivityOverride { get; }
+        public int ReplyCount => ReplyCountOverride ?? Replies.Count;
+        public DateTimeOffset LastActivityUtc => LastActivityOverride ?? (Replies.Count > 0 ? Replies[Replies.Count - 1].PublishedAtUtc : OriginalPost.PublishedAtUtc);
     }
 }
